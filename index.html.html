@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Step 3 Tracker — Augusto</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+.exam-sec{margin-bottom:18px;border:1px solid #d7dee6;border-radius:10px;overflow:hidden}
+.exam-banner{background:#B8860B;color:#fff;font-weight:700;font-size:13px;padding:9px 13px;display:flex;align-items:center;gap:10px}
+.exam-banner .btn{margin-left:auto;background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.4)}
+.exam-sec table th{background:#1F3864;color:#fff;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:11.5px;font-weight:600}
+.sess-wrap{padding:8px 14px;border-top:1px solid var(--line)}
+.sess-wrap b{font-size:13px}
+.sess-wrap table{margin-top:6px}
+.sess-wrap table th{background:#1F3864;color:#fff;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:11px;font-weight:600}
+.sess-tot{font-size:12px;color:var(--muted);margin-top:5px}
+:root{--bg:#f4f6f8;--panel:#fff;--line:#d7dee6;--ink:#1f2b36;--muted:#6b7c8c;--teal:#2e7d78;--teal-soft:#e3f1f0;--purple:#6b5b95;--purple-soft:#efeaf6;--mark:#b07d18;--mark-soft:#fdf3dd;--good:#2e9e57;--input:#fffbe9;--ccs:#f3effa;--block:#f0ebe6;--blockink:#b06a3a;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:14px;line-height:1.45}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px 80px}
+header{padding:20px 0 14px}h1{font-size:24px;margin:0 0 3px;font-weight:700}.sub{color:var(--muted);font-size:13.5px;margin:0}
+.bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 13px;margin:12px 0;font-size:13px}
+.bar .who{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}.dot{width:9px;height:9px;border-radius:50%;background:var(--mark)}.dot.on{background:var(--good)}
+.btn{font:inherit;font-size:12.5px;cursor:pointer;border-radius:7px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:5px 11px}.btn:hover{background:var(--teal-soft);border-color:var(--teal)}.btn.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.modeline{font-size:12.5px;color:var(--muted);margin:4px 2px 12px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}@media(max-width:720px){.cards{grid-template-columns:repeat(2,1fr)}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}.card .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-family:'JetBrains Mono',monospace}.card .num{font-size:22px;font-weight:700;margin:3px 0 2px}.card .num small{font-size:13px;color:var(--muted);font-weight:500}
+.meter{height:5px;border-radius:5px;background:#eef2f5;overflow:hidden;margin-top:7px}.meter>i{display:block;height:100%;background:var(--teal);width:0;transition:width .4s}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px;border-bottom:2px solid var(--line)}.tab{font:inherit;font-size:13px;font-weight:600;background:none;border:none;color:var(--muted);padding:9px 13px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}.tab.active{color:var(--teal);border-bottom-color:var(--teal)}
+.week{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-bottom:14px;overflow:hidden}
+.week-head{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}.week-head h2{font-size:15px;margin:0;font-weight:700}.week-head .dates{color:var(--muted);font-size:12.5px;font-family:'JetBrains Mono',monospace}.wk-pct{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:0;text-align:left;border:1px solid var(--line)}th{background:#eef2f5;color:var(--muted);font-size:10.5px;letter-spacing:.03em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;font-weight:600;padding:7px 9px;white-space:nowrap}
+td .cell{padding:6px 9px;min-height:30px;outline:none}td .cell:focus{background:var(--teal-soft);box-shadow:inset 0 0 0 2px var(--teal)}
+.col-day{width:92px;font-weight:600;white-space:nowrap}.col-hrs{width:120px;color:var(--muted);font-size:12px}.col-q,.col-ccs{width:58px}.col-done,.col-cdone{width:58px;background:var(--input)}.col-cdone{background:var(--ccs)}.col-chk{width:30px;text-align:center}.col-pct{width:54px}
+.num-cell{font-family:'JetBrains Mono',monospace;text-align:center}.plan-num{color:var(--muted)}
+.block-row td{background:var(--block);color:var(--blockink);font-style:italic;font-weight:600}
+.rev-row td{background:var(--purple-soft)}
+.assess-row td .cell{color:var(--mark);font-weight:700}
+.chk{width:18px;height:18px;cursor:pointer;accent-color:var(--good);margin:6px auto;display:block}
+.tracker-tab{display:none}.tracker-tab.active{display:block}.tnote{color:var(--muted);font-size:12.5px;margin:0 2px 10px}.delbtn{cursor:pointer;color:#c1666b;font-weight:700;border:none;background:none;font-size:14px}.rowtools{width:26px;text-align:center}
+select.reason{font:inherit;font-size:13px;border:none;background:transparent;width:100%;padding:6px 9px;outline:none}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--teal);color:#fff;padding:9px 16px;border-radius:9px;font-size:13.5px;font-weight:600;opacity:0;transition:.3s;pointer-events:none;z-index:60}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(20,30,40,.4);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modal.show{display:flex}.sheet{background:var(--panel);border-radius:14px;max-width:440px;width:100%;padding:20px}.sheet h3{margin:0 0 4px}.sheet p{color:var(--muted);font-size:13px;margin:0 0 12px}.sheet label{display:block;font-size:11.5px;color:var(--muted);margin:9px 0 3px;font-family:'JetBrains Mono',monospace;text-transform:uppercase}.sheet input{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit}.sheet .row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:10px 2px;font-size:12px;color:var(--muted)}.legend span{display:flex;align-items:center;gap:5px}.sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+</style></head><body><div class="wrap">
+<header><h1>Step 3 Study Tracker — Augusto</h1><p class="sub" id="sub"></p></header>
+<div class="bar"><span class="dot" id="dot"></span><span id="syncText">Local only — saved on this device</span>
+<span class="who"><button class="btn" id="modeBtn">✏️ Edit plan: OFF</button><button class="btn" id="setupBtn">Connect sync</button><button class="btn" id="refreshBtn">↻ Refresh</button><button class="btn" id="exportBtn">Export CSV</button></span></div>
+<div class="modeline">Schedule follows Augusto's availability — no tasks on SOW, vacation, or unavailable days. On-call days are light; daily load scales to his hours. Toggle <b>Edit plan</b> to change anything (tutor).</div>
+<div class="cards">
+<div class="card"><div class="lbl">UWorld</div><div class="num"><span id="uwD">0</span><small>/<span id="uwT">0</span></small></div><div class="meter"><i id="uwBar"></i></div></div>
+<div class="card"><div class="lbl">First · Second half</div><div class="num" style="font-size:17px"><span id="h1D">0</span>/<span id="h1T">0</span> · <span id="h2D">0</span>/<span id="h2T">0</span></div><div class="meter"><i id="halfBar"></i></div></div>
+<div class="card"><div class="lbl">CCS cases</div><div class="num"><span id="ccsD">0</span><small>/181</small></div><div class="meter"><i id="ccsBar"></i></div></div>
+<div class="card"><div class="lbl">Assessments</div><div class="num"><span id="asD">0</span><small>/5</small></div><div class="meter"><i id="asBar"></i></div></div>
+</div>
+<div class="legend"><span><i class="sw" style="background:var(--input)"></i>Type your "done"</span><span><i class="sw" style="background:var(--block)"></i>Blocked (SOW/vacation)</span><span><i class="sw" style="background:var(--mark-soft)"></i>Assessment</span><span><i class="sw" style="background:var(--purple-soft)"></i>Revision</span></div>
+<div class="tabs" id="tabs"></div>
+<div id="weekArea"></div>
+<div class="tracker-tab" id="tab-ccs"><p class="tnote">CCS Cases log — <button class="btn" id="addCcs">+ Add case</button></p><div class="week"><table id="ccsTable"><thead><tr><th class="rowtools"></th><th>#</th><th>Date</th><th>Case / diagnosis</th><th>System</th><th>Score / feedback</th><th>What to improve</th><th>Notes</th></tr></thead><tbody id="ccsBody"></tbody></table></div></div>
+<div class="tracker-tab" id="tab-nbme"><p class="tnote">Assessment Review — log every missed/flagged question under its exam.</p><div id="nbmeSections"></div></div>
+</div>
+<div class="modal" id="modal"><div class="sheet"><h3>Connect live sync</h3><p>Paste Supabase URL + publishable key. Blank = local only.</p><label>Project URL</label><input id="inUrl" placeholder="https://xxxx.supabase.co"><label>Publishable key</label><input id="inKey" placeholder="sb_publishable_..."><label>Your name</label><input id="inName" placeholder="Tutor or Augusto"><div class="row"><button class="btn" id="cancelSetup">Cancel</button><button class="btn on" id="saveSetup">Save</button></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const SCHED={"student": "Augusto", "start": "Jun 28", "end": "Sep 04", "year": 2026, "uworld_total": 2152, "ccs_total": 181, "per_unit": 82, "daily": [{"date": "2026-06-28", "label": "On call", "q": 25, "type": "study", "weight": 0.3, "systems": [["Hematology & Oncology", 25]], "ccs": 4, "dow": "Sun", "disp": "Jun 28"}, {"date": "2026-06-29", "label": "10AM\u20131PM + after 3PM", "q": 49, "type": "study", "weight": 0.6, "systems": [["Hematology & Oncology", 19], ["Endocrine, Diabetes & Metabolism", 30]], "ccs": 4, "dow": "Mon", "disp": "Jun 29"}, {"date": "2026-06-30", "label": "After 12PM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Endocrine, Diabetes & Metabolism", 37], ["Allergy & Immunology", 4]], "ccs": 4, "dow": "Tue", "disp": "Jun 30"}, {"date": "2026-07-01", "label": "10AM\u20133PM", "q": 49, "type": "study", "weight": 0.6, "systems": [["Allergy & Immunology", 25], ["Ear, Nose & Throat (ENT)", 24]], "ccs": 4, "dow": "Wed", "disp": "Jul 01"}, {"date": "2026-07-02", "label": "After 11AM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Ear, Nose & Throat (ENT)", 4], ["Dermatology", 37]], "ccs": 4, "dow": "Thu", "disp": "Jul 02"}, {"date": "2026-07-03", "label": "Available all day", "q": 82, "type": "study", "weight": 1.0, "systems": [["Dermatology", 14], ["Pulmonary & Critical Care", 49], ["Renal, Urinary Systems & Electrolytes", 19]], "ccs": 4, "dow": "Fri", "disp": "Jul 03"}, {"date": "2026-07-04", "label": "Available all day", "q": 82, "type": "study", "weight": 1.0, "systems": [["Renal, Urinary Systems & Electrolytes", 29], ["Cardiovascular System", 53]], "ccs": 4, "dow": "Sat", "disp": "Jul 04"}, {"date": "2026-07-05", "label": "Available all day", "q": 82, "type": "study", "weight": 1.0, "systems": [["Cardiovascular System", 29], ["Gastrointestinal & Nutrition", 53]], "ccs": 4, "dow": "Sun", "disp": "Jul 05"}, {"date": "2026-07-06", "label": "10AM\u20131PM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Gastrointestinal & Nutrition", 31], ["Biostatistics & Epidemiology", 10]], "ccs": 4, "dow": "Mon", "disp": "Jul 06"}, {"date": "2026-07-07", "label": "After 12PM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Biostatistics & Epidemiology", 41]], "ccs": 4, "dow": "Tue", "disp": "Jul 07"}, {"date": "2026-07-08", "label": "After 10AM", "q": 49, "type": "study", "weight": 0.6, "systems": [["Biostatistics & Epidemiology", 33], ["Social Sciences (Ethics/Legal/Professional)", 16]], "ccs": 4, "dow": "Wed", "disp": "Jul 08"}, {"date": "2026-07-09", "label": "Available all day", "q": 82, "type": "study", "weight": 1.0, "systems": [["Social Sciences (Ethics/Legal/Professional)", 46], ["Infectious Diseases", 36]], "ccs": 4, "dow": "Thu", "disp": "Jul 09"}, {"date": "2026-07-10", "label": "After 12PM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Infectious Diseases", 41]], "ccs": 4, "dow": "Fri", "disp": "Jul 10"}, {"date": "2026-07-11", "label": "On call", "q": 25, "type": "study", "weight": 0.3, "systems": [["Infectious Diseases", 25]], "ccs": 4, "dow": "Sat", "disp": "Jul 11"}, {"date": "2026-07-12", "label": "On call", "q": 25, "type": "study", "weight": 0.3, "systems": [["Infectious Diseases", 4], ["Nervous System", 21]], "ccs": 4, "dow": "Sun", "disp": "Jul 12"}, {"date": "2026-07-13", "label": "10AM\u20131PM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Nervous System", 41]], "ccs": 4, "dow": "Mon", "disp": "Jul 13"}, {"date": "2026-07-14", "label": "Unavailable", "q": 0, "type": "block", "weight": 0, "dow": "Tue", "disp": "Jul 14"}, {"date": "2026-07-15", "label": "After 10AM", "q": 49, "type": "study", "weight": 0.6, "systems": [["Nervous System", 12], ["Psychiatric/Behavioral & Substance Use Disorder", 37]], "ccs": 4, "dow": "Wed", "disp": "Jul 15"}, {"date": "2026-07-16", "label": "After 12PM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Psychiatric/Behavioral & Substance Use Disorder", 25], ["Rheumatology/Orthopedics & Sports", 16]], "ccs": 4, "dow": "Thu", "disp": "Jul 16"}, {"date": "2026-07-17", "label": "8\u20131PM, 1\u20132PM", "q": 49, "type": "study", "weight": 0.6, "systems": [["Rheumatology/Orthopedics & Sports", 48], ["Female Reproductive System & Breast", 1]], "ccs": 4, "dow": "Fri", "disp": "Jul 17"}, {"date": "2026-07-18", "label": "Available", "q": 0, "type": "assess", "weight": 1.0, "assess": "UWSA 1 (timed)", "dow": "Sat", "disp": "Jul 18"}, {"date": "2026-07-19", "label": "Unavailable", "q": 0, "type": "block", "weight": 0, "dow": "Sun", "disp": "Jul 19"}, {"date": "2026-07-20", "label": "SOW", "q": 0, "type": "block", "weight": 0, "dow": "Mon", "disp": "Jul 20"}, {"date": "2026-07-21", "label": "SOW", "q": 0, "type": "block", "weight": 0, "dow": "Tue", "disp": "Jul 21"}, {"date": "2026-07-22", "label": "SOW", "q": 0, "type": "block", "weight": 0, "dow": "Wed", "disp": "Jul 22"}, {"date": "2026-07-23", "label": "SOW", "q": 0, "type": "block", "weight": 0, "dow": "Thu", "disp": "Jul 23"}, {"date": "2026-07-24", "label": "SOW", "q": 0, "type": "block", "weight": 0, "dow": "Fri", "disp": "Jul 24"}, {"date": "2026-07-25", "label": "Available", "q": 82, "type": "study", "weight": 1.0, "systems": [["Female Reproductive System & Breast", 42], ["Pregnancy, Childbirth & Puerperium", 40]], "ccs": 4, "dow": "Sat", "disp": "Jul 25"}, {"date": "2026-07-26", "label": "Available", "q": 82, "type": "study", "weight": 1.0, "systems": [["Pregnancy, Childbirth & Puerperium", 5], ["Poisoning & Environmental Exposure", 35], ["Miscellaneous (Multisystem)", 20]], "ccs": 4, "dow": "Sun", "disp": "Jul 26"}, {"date": "2026-07-27", "label": "10AM\u20131PM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Hematology & Oncology", 41]], "ccs": 4, "dow": "Mon", "disp": "Jul 27"}, {"date": "2026-07-28", "label": "Available until 4PM", "q": 58, "type": "study", "weight": 0.7, "systems": [["Hematology & Oncology", 4], ["Endocrine, Diabetes & Metabolism", 54]], "ccs": 4, "dow": "Tue", "disp": "Jul 28"}, {"date": "2026-07-29", "label": "After 10AM", "q": 49, "type": "study", "weight": 0.6, "systems": [["Endocrine, Diabetes & Metabolism", 13], ["Ophthalmology", 30], ["Dermatology", 6]], "ccs": 4, "dow": "Wed", "disp": "Jul 29"}, {"date": "2026-07-30", "label": "Available all day", "q": 82, "type": "study", "weight": 1.0, "systems": [["Dermatology", 45], ["Pulmonary & Critical Care", 37]], "ccs": 4, "dow": "Thu", "disp": "Jul 30"}, {"date": "2026-07-31", "label": "Available all day", "q": 0, "type": "assess", "weight": 1.0, "assess": "NBME 7 (timed, full)", "dow": "Fri", "disp": "Jul 31"}, {"date": "2026-08-01", "label": "Available", "q": 82, "type": "study", "weight": 1.0, "systems": [["Pulmonary & Critical Care", 13], ["Renal, Urinary Systems & Electrolytes", 48], ["Cardiovascular System", 21]], "ccs": 4, "dow": "Sat", "disp": "Aug 01"}, {"date": "2026-08-02", "label": "On call", "q": 25, "type": "study", "weight": 0.3, "systems": [["Cardiovascular System", 25]], "ccs": 4, "dow": "Sun", "disp": "Aug 02"}, {"date": "2026-08-03", "label": "10AM\u20131PM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Cardiovascular System", 36], ["Gastrointestinal & Nutrition", 5]], "ccs": 4, "dow": "Mon", "disp": "Aug 03"}, {"date": "2026-08-04", "label": "After 12PM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Gastrointestinal & Nutrition", 41]], "ccs": 4, "dow": "Tue", "disp": "Aug 04"}, {"date": "2026-08-05", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Wed", "disp": "Aug 05"}, {"date": "2026-08-06", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Thu", "disp": "Aug 06"}, {"date": "2026-08-07", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Fri", "disp": "Aug 07"}, {"date": "2026-08-08", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Sat", "disp": "Aug 08"}, {"date": "2026-08-09", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Sun", "disp": "Aug 09"}, {"date": "2026-08-10", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Mon", "disp": "Aug 10"}, {"date": "2026-08-11", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Tue", "disp": "Aug 11"}, {"date": "2026-08-12", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Wed", "disp": "Aug 12"}, {"date": "2026-08-13", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Thu", "disp": "Aug 13"}, {"date": "2026-08-14", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Fri", "disp": "Aug 14"}, {"date": "2026-08-15", "label": "VACATION", "q": 0, "type": "block", "weight": 0, "dow": "Sat", "disp": "Aug 15"}, {"date": "2026-08-16", "label": "Available", "q": 82, "type": "study", "weight": 1.0, "systems": [["Gastrointestinal & Nutrition", 39], ["Biostatistics & Epidemiology", 43]], "ccs": 4, "dow": "Sun", "disp": "Aug 16"}, {"date": "2026-08-17", "label": "After 10AM", "q": 49, "type": "study", "weight": 0.6, "systems": [["Biostatistics & Epidemiology", 41], ["Social Sciences (Ethics/Legal/Professional)", 8]], "ccs": 4, "dow": "Mon", "disp": "Aug 17"}, {"date": "2026-08-18", "label": "Available all day", "q": 82, "type": "study", "weight": 1.0, "systems": [["Social Sciences (Ethics/Legal/Professional)", 54], ["Infectious Diseases", 28]], "ccs": 4, "dow": "Tue", "disp": "Aug 18"}, {"date": "2026-08-19", "label": "After 9AM", "q": 58, "type": "study", "weight": 0.7, "systems": [["Infectious Diseases", 58]], "ccs": 4, "dow": "Wed", "disp": "Aug 19"}, {"date": "2026-08-20", "label": "Available all day", "q": 0, "type": "assess", "weight": 1.0, "assess": "NBME 8 (timed, full)", "dow": "Thu", "disp": "Aug 20"}, {"date": "2026-08-21", "label": "Available all day", "q": 82, "type": "study", "weight": 1.0, "systems": [["Infectious Diseases", 20], ["Nervous System", 62]], "ccs": 4, "dow": "Fri", "disp": "Aug 21"}, {"date": "2026-08-22", "label": "Available", "q": 82, "type": "study", "weight": 1.0, "systems": [["Nervous System", 13], ["Psychiatric/Behavioral & Substance Use Disorder", 62], ["Rheumatology/Orthopedics & Sports", 7]], "ccs": 4, "dow": "Sat", "disp": "Aug 22"}, {"date": "2026-08-23", "label": "Available", "q": 82, "type": "study", "weight": 1.0, "systems": [["Rheumatology/Orthopedics & Sports", 58], ["Female Reproductive System & Breast", 24]], "ccs": 4, "dow": "Sun", "disp": "Aug 23"}, {"date": "2026-08-24", "label": "10AM\u20131PM", "q": 41, "type": "study", "weight": 0.5, "systems": [["Female Reproductive System & Breast", 20], ["Pregnancy, Childbirth & Puerperium", 21]], "ccs": 4, "dow": "Mon", "disp": "Aug 24"}, {"date": "2026-08-25", "label": "8AM\u20134PM", "q": 66, "type": "study", "weight": 0.8, "systems": [["Pregnancy, Childbirth & Puerperium", 24], ["Male Reproductive System", 31], ["Miscellaneous (Multisystem)", 11], ["Miscellaneous (Multisystem)", 9], ["General Principles", 23]], "ccs": 4, "dow": "Tue", "disp": "Aug 25"}, {"date": "2026-08-26", "label": "After 10AM", "q": 0, "type": "assess", "weight": 0.6, "assess": "UWSA 2 (timed) \u2014 readiness", "dow": "Wed", "disp": "Aug 26"}, {"date": "2026-08-27", "label": "Available all day", "q": 0, "type": "assess", "weight": 1.0, "assess": "Free 137 (dress rehearsal)", "dow": "Thu", "disp": "Aug 27"}, {"date": "2026-08-28", "label": "Available all day", "q": 0, "type": "revision", "weight": 1.0, "dow": "Fri", "disp": "Aug 28"}, {"date": "2026-08-29", "label": "Available", "q": 0, "type": "revision", "weight": 1.0, "dow": "Sat", "disp": "Aug 29"}, {"date": "2026-08-30", "label": "Available", "q": 0, "type": "revision", "weight": 1.0, "dow": "Sun", "disp": "Aug 30"}, {"date": "2026-08-31", "label": "SOW", "q": 0, "type": "block", "weight": 0, "dow": "Mon", "disp": "Aug 31"}, {"date": "2026-09-01", "label": "SOW", "q": 0, "type": "block", "weight": 0, "dow": "Tue", "disp": "Sep 01"}, {"date": "2026-09-02", "label": "SOW", "q": 0, "type": "block", "weight": 0, "dow": "Wed", "disp": "Sep 02"}, {"date": "2026-09-03", "label": "SOW", "q": 0, "type": "block", "weight": 0, "dow": "Thu", "disp": "Sep 03"}, {"date": "2026-09-04", "label": "SOW", "q": 0, "type": "block", "weight": 0, "dow": "Fri", "disp": "Sep 04"}], "first_total": 1077, "second_total": 1075};const LS="step3.augusto.v1";
+const REASONS=["","Knowledge gap","Misread question","Wrong reasoning","Forgot/recall","Time pressure","Silly mistake","Other"];
+const EXAMS=["NBME 7","NBME 8","UWSA 1","UWSA 2","Free 137"];
+const DEFAULT_CFG={url:"https://qpenyuppryjctyskglfb.supabase.co",key:"sb_publishable_mbtIotNYiwT19ykhZbEWBQ_OJM-ry9w",name:""};
+let state=load()||fresh();
+if(state.cfg){if(!state.cfg.url)state.cfg.url=DEFAULT_CFG.url;if(!state.cfg.key)state.cfg.key=DEFAULT_CFG.key;}else state.cfg={...DEFAULT_CFG};
+function fresh(){return{plan:JSON.parse(JSON.stringify(SCHED)),done:{},ccs:[],nbme:[],sessions:{},cfg:{...DEFAULT_CFG},edit:false};}
+if(!state.sessions)state.sessions={};
+function load(){try{let s=JSON.parse(localStorage.getItem(LS));if(s&&!s.plan)return null;return s;}catch(e){return null}}
+function save(){localStorage.setItem(LS,JSON.stringify(state));push();}
+const $=s=>document.querySelector(s);
+let curTab="w1";
+// group days into weeks (Sun-start)
+function weeksOf(plan){
+ const w=[];let cur=[];
+ plan.daily.forEach(d=>{
+  const dow=d.dow;
+  if(dow==="Sun"&&cur.length){w.push(cur);cur=[];}
+  cur.push(d);
+ });
+ if(cur.length)w.push(cur);
+ return w;
+}
+function dkey(dt){return "d"+dt;}
+function buildTabs(){
+ const wks=weeksOf(state.plan);const t=$("#tabs");t.innerHTML="";
+ wks.forEach((_,i)=>{const b=document.createElement("button");b.className="tab"+(curTab==="w"+(i+1)?" active":"");b.textContent="Wk "+(i+1);b.onclick=()=>{curTab="w"+(i+1);renderAll();};t.appendChild(b);});
+ [["ccs","CCS Cases"],["nbme","NBME Review"]].forEach(([id,lbl])=>{const b=document.createElement("button");b.className="tab"+(curTab===id?" active":"");b.textContent=lbl;b.onclick=()=>{curTab=id;renderAll();};t.appendChild(b);});
+}
+function renderWeeks(){
+ const area=$("#weekArea");area.innerHTML="";
+ $("#tab-ccs").classList.remove("active");$("#tab-nbme").classList.remove("active");
+ if(curTab==="ccs"){area.style.display="none";$("#tab-ccs").classList.add("active");renderCcs();return;}
+ if(curTab==="nbme"){area.style.display="none";$("#tab-nbme").classList.add("active");renderNbme();return;}
+ area.style.display="block";
+ const wks=weeksOf(state.plan);const idx=+curTab.slice(1)-1;const days=wks[idx];if(!days)return;
+ const edit=state.edit;
+ let body="";
+ days.forEach(d=>{
+  const k=dkey(d.date);const e=state.done[k]||{};
+  if(d.type==="block"){body+=`<tr class="block-row"><td class="col-chk"></td><td class="col-day">${d.dow} ${d.disp}</td><td class="col-hrs">${d.label}</td><td colspan="6"><div class="cell">${d.label} — no tasks</div></td></tr>`;return;}
+  if(d.type==="assess"){body+=`<tr class="assess-row"><td class="col-chk"><input type="checkbox" class="chk" data-k="${k}" ${e.done?"checked":""}></td><td class="col-day">${d.dow} ${d.disp}</td><td class="col-hrs">${d.label}</td><td colspan="6"><div class="cell">${d.assess}</div></td></tr>`;return;}
+  const sysdesc=(d.systems||[]).map(s=>`${s[0].split('(')[0].split('&')[0].trim()} (${s[1]})`).join(" · ")||(d.type==="revision"?"Revision / incorrects / weak systems":"");
+  const rowcls=d.type==="revision"?"rev-row":"";
+  body+=`<tr class="${rowcls}"><td class="col-chk"></td><td class="col-day">${d.dow} ${d.disp}</td><td class="col-hrs">${d.label}</td>
+   <td><div class="cell" ${edit?'contenteditable':''} data-f="systems" data-d="${d.date}">${sysdesc}</div></td>
+   <td class="col-q"><div class="cell num-cell plan-num" ${edit?'contenteditable':''} data-f="q" data-d="${d.date}">${d.q||""}</div></td>
+   <td class="col-done"><div class="cell num-cell" contenteditable data-done="q" data-k="${k}">${e.q??""}</div></td>
+   <td class="col-ccs"><div class="cell num-cell plan-num" ${edit?'contenteditable':''} data-f="ccs" data-d="${d.date}">${d.ccs||""}</div></td>
+   <td class="col-cdone"><div class="cell num-cell" contenteditable data-done="ccs" data-k="${k}">${e.ccs??""}</div></td>
+   <td class="col-pct num-cell" id="pct-${k}"></td>
+   <td><div class="cell" contenteditable data-done="note" data-k="${k}">${e.note||""}</div></td></tr>`;
+ });
+ const div=document.createElement("div");div.className="week";
+ const phase=days.some(d=>d.date<="2026-07-26")?(days.every(d=>d.date<="2026-07-26")?"First half":"First→Second half"):"Second half (retention)";
+ div.innerHTML=`<div class="week-head"><h2>Week ${idx+1}</h2><span class="dates">${days[0].disp} – ${days[days.length-1].disp}</span><span class="wk-pct">${phase}</span></div>
+ <table><thead><tr><th class="col-chk">✓</th><th class="col-day">Day</th><th class="col-hrs">Hours</th><th>UWorld (Create Test ▸ Unused ▸ system)</th><th class="col-q">Plan</th><th class="col-done">Done</th><th class="col-ccs">CCS</th><th class="col-cdone">Done</th><th class="col-pct">%</th><th>Notes</th></tr></thead><tbody>${body}</tbody></table>`;
+ // tutor sessions for this week
+ const wk=idx+1;const sess=state.sessions[wk]||(state.sessions[wk]=[]);
+ let sh=`<div class="sess-wrap"><b>Tutor sessions this week</b><table><thead><tr><th style="width:34px">✓</th><th>Topic</th><th style="width:70px">Hours</th><th class="rowtools"></th></tr></thead><tbody>`;
+ sess.forEach((s,si)=>{
+  sh+=`<tr><td style="text-align:center"><input type="checkbox" class="sesschk" data-w="${wk}" data-si="${si}" ${s.done?"checked":""}></td>`+
+   `<td><div class="cell" contenteditable data-stopic="${wk}:${si}">${(s.topic||"").replace(/</g,"&lt;")}</div></td>`+
+   `<td><div class="cell" contenteditable data-shours="${wk}:${si}">${(s.hours||"").toString().replace(/</g,"&lt;")}</div></td>`+
+   `<td class="rowtools"><button class="delbtn" data-sdel="${wk}:${si}">×</button></td></tr>`;
+ });
+ const tot=sess.reduce((a,s)=>a+(parseFloat(s.hours)||0),0);
+ sh+=`</tbody></table><button class="btn addsess" data-w="${wk}">+ Add session</button><div class="sess-tot">Total hours: <b>${tot}</b></div></div>`;
+ div.insertAdjacentHTML("beforeend",sh);
+ area.appendChild(div);wire(div);
+}
+function wire(scope){
+ scope.querySelectorAll('[data-done]').forEach(el=>el.addEventListener("blur",()=>{const k=el.dataset.k,f=el.dataset.done;state.done[k]=state.done[k]||{};let v=el.textContent.trim();state.done[k][f]=(f==="note")?v:(v===""?undefined:+v);save();summarise();}));
+ scope.querySelectorAll('.chk').forEach(c=>c.addEventListener("change",()=>{const k=c.dataset.k;state.done[k]=state.done[k]||{};state.done[k].done=c.checked;save();summarise();}));
+ scope.querySelectorAll('[data-f]').forEach(el=>el.addEventListener("blur",()=>{const dt=el.dataset.d,f=el.dataset.f;const day=state.plan.daily.find(x=>x.date===dt);if(!day)return;let v=el.textContent.trim();if(f==="q"||f==="ccs")day[f]=v===""?0:+v;else if(f==="systems")day.systems=v?[[v,0]]:[];save();summarise();}));
+ const sx=s=>s.split(":").map(Number);
+ scope.querySelectorAll('[data-stopic]').forEach(el=>el.addEventListener("blur",()=>{const[w,si]=sx(el.dataset.stopic);state.sessions[w][si].topic=el.textContent;save();}));
+ scope.querySelectorAll('[data-shours]').forEach(el=>el.addEventListener("blur",()=>{const[w,si]=sx(el.dataset.shours);state.sessions[w][si].hours=el.textContent.trim();save();renderAll();}));
+ scope.querySelectorAll('.sesschk').forEach(c=>c.addEventListener("change",()=>{state.sessions[+c.dataset.w][+c.dataset.si].done=c.checked;save();}));
+ scope.querySelectorAll('[data-sdel]').forEach(b=>b.addEventListener("click",()=>{const[w,si]=sx(b.dataset.sdel);state.sessions[w].splice(si,1);save();renderAll();}));
+ scope.querySelectorAll('.addsess').forEach(b=>b.addEventListener("click",()=>{const w=+b.dataset.w;(state.sessions[w]=state.sessions[w]||[]).push({topic:"",hours:"",done:false});save();renderAll();}));
+}
+function renderCcs(){const tb=$("#ccsBody");tb.innerHTML="";state.ccs.forEach((r,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td class="rowtools"><button class="delbtn" data-d="${i}">×</button></td><td class="num-cell" style="color:#9aa">${i+1}</td>`+["date","dx","system","score","improve","note"].map(f=>`<td><div class="cell" contenteditable data-i="${i}" data-f="${f}">${(r[f]||"").replace(/</g,"&lt;")}</div></td>`).join("");tb.appendChild(tr);});tb.querySelectorAll('[data-f]').forEach(el=>el.addEventListener("blur",()=>{state.ccs[+el.dataset.i][el.dataset.f]=el.textContent;save();}));tb.querySelectorAll('[data-d]').forEach(b=>b.addEventListener("click",()=>{state.ccs.splice(+b.dataset.d,1);save();renderCcs();}));}
+function renderNbme(){const wrap=$("#nbmeSections");wrap.innerHTML="";
+ EXAMS.forEach(exam=>{
+  const sec=document.createElement("div");sec.className="exam-sec";
+  sec.innerHTML=`<div class="exam-banner">${exam} Review — log every missed/flagged question<button class="btn addExam" data-exam="${exam}">+ Add question</button></div><table><thead><tr><th class="rowtools"></th><th>#</th><th>Date</th><th>Block</th><th>QID</th><th>System</th><th>Reason for mistake</th><th>Weak topic</th><th>Notes / take-away</th></tr></thead><tbody></tbody></table>`;
+  const tb=sec.querySelector("tbody");
+  state.nbme.forEach((r,i)=>{
+   if(r.form!==exam)return;
+   const tr=document.createElement("tr");const opts=REASONS.map(o=>`<option ${o===r.reason?"selected":""}>${o}</option>`).join("");
+   tr.innerHTML=`<td class="rowtools"><button class="delbtn" data-d="${i}">×</button></td><td class="num-cell" style="color:#9aa">${i+1}</td>`+["date","block","qid","system"].map(f=>`<td><div class="cell" contenteditable data-i="${i}" data-f="${f}">${(r[f]||"").replace(/</g,"&lt;")}</div></td>`).join("")+`<td><select class="reason" data-i="${i}">${opts}</select></td>`+["topic","note"].map(f=>`<td><div class="cell" contenteditable data-i="${i}" data-f="${f}">${(r[f]||"").replace(/</g,"&lt;")}</div></td>`).join("");
+   tb.appendChild(tr);
+  });
+  wrap.appendChild(sec);
+ });
+ wrap.querySelectorAll('[data-f]').forEach(el=>el.addEventListener("blur",()=>{state.nbme[+el.dataset.i][el.dataset.f]=el.textContent;save();}));
+ wrap.querySelectorAll('.reason').forEach(s=>s.addEventListener("change",()=>{state.nbme[+s.dataset.i].reason=s.value;save();}));
+ wrap.querySelectorAll('[data-d]').forEach(b=>b.addEventListener("click",()=>{state.nbme.splice(+b.dataset.d,1);save();renderNbme();}));
+ wrap.querySelectorAll('.addExam').forEach(b=>b.addEventListener("click",()=>{state.nbme.push({form:b.dataset.exam,date:"",block:"",qid:"",system:"",reason:"",topic:"",note:""});save();renderNbme();}));
+}
+$("#addCcs").onclick=()=>{state.ccs.push({});save();renderCcs();};
+function summarise(){
+ let uw=0,h1=0,h2=0,h1t=0,h2t=0,ccs=0,as=0;
+ state.plan.daily.forEach(d=>{
+  const e=state.done[dkey(d.date)]||{};const q=+e.q||0;uw+=q;ccs+=(+e.ccs||0);
+  if(d.type==="assess"&&e.done)as++;
+  if(d.q){if(d.date<="2026-07-26"){h1+=q;h1t+=d.q;}else{h2+=q;h2t+=d.q;}}
+  const pk=document.getElementById("pct-"+dkey(d.date));
+  if(pk){const plan=(d.q||0)+(d.ccs||0);const done=q+(+e.ccs||0);pk.textContent=plan?Math.round(done/plan*100)+"%":"";}
+ });
+ $("#uwD").textContent=uw;$("#uwT").textContent=state.plan.uworld_total;
+ $("#h1D").textContent=h1;$("#h1T").textContent=state.plan.first_total;$("#h2D").textContent=h2;$("#h2T").textContent=state.plan.second_total;
+ $("#ccsD").textContent=ccs;$("#asD").textContent=as;
+ $("#uwBar").style.width=(uw/state.plan.uworld_total*100)+"%";$("#halfBar").style.width=((h1+h2)/(state.plan.first_total+state.plan.second_total)*100)+"%";$("#ccsBar").style.width=(ccs/181*100)+"%";$("#asBar").style.width=(as/5*100)+"%";
+}
+function renderAll(){buildTabs();renderWeeks();summarise();}
+$("#modeBtn").onclick=()=>{state.edit=!state.edit;$("#modeBtn").textContent="✏️ Edit plan: "+(state.edit?"ON":"OFF");$("#modeBtn").classList.toggle("on",state.edit);save();renderAll();};
+$("#exportBtn").onclick=()=>{let rows=["Date,Day,Hours,Type,Plan Q,Done Q,CCS,CCS Done,Notes"];state.plan.daily.forEach(d=>{const e=state.done[dkey(d.date)]||{};rows.push([d.date,d.dow,'"'+d.label+'"',d.type,d.q||"",e.q??"",d.ccs||"",e.ccs??"",'"'+(e.note||"")+'"'].join(","));});const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([rows.join("\n")],{type:"text/csv"}));a.download="augusto_step3.csv";a.click();toast("Exported");};
+function syncStatus(){const on=state.cfg.url&&state.cfg.key;$("#dot").className="dot "+(on?"on":"");$("#syncText").textContent=on?("Live sync on"+(state.cfg.name?" — "+state.cfg.name:"")):"Local only — saved on this device";}
+$("#setupBtn").onclick=()=>{$("#inUrl").value=state.cfg.url;$("#inKey").value=state.cfg.key;$("#inName").value=state.cfg.name;$("#modal").classList.add("show");};
+$("#cancelSetup").onclick=()=>$("#modal").classList.remove("show");
+$("#saveSetup").onclick=async()=>{state.cfg={url:$("#inUrl").value.trim().replace(/\/$/,""),key:$("#inKey").value.trim(),name:$("#inName").value.trim()};localStorage.setItem(LS,JSON.stringify(state));$("#modal").classList.remove("show");syncStatus();if(state.cfg.url&&state.cfg.key){toast("Syncing…");await pull();await push(true);toast("Connected");}else toast("Local only");};
+$("#refreshBtn").onclick=async()=>{if(state.cfg.url&&state.cfg.key){toast("Refreshing…");await pull();toast("Up to date");}else toast("Connect sync first");};
+function hdr(){return{"Content-Type":"application/json","apikey":state.cfg.key,"Authorization":"Bearer "+state.cfg.key};}
+let lastSync=null,pushing=false;
+async function serverStamp(){try{const r=await fetch(state.cfg.url+"/rest/v1/tracker?id=eq.augusto&select=updated_at",{headers:hdr()});const rows=await r.json();return(Array.isArray(rows)&&rows[0])?rows[0].updated_at:null;}catch(e){return null;}}
+async function push(force){if(!(state.cfg.url&&state.cfg.key))return;if(pushing)return;pushing=true;
+ try{
+  if(!force&&lastSync){const srv=await serverStamp();if(srv&&srv>lastSync){await pull();toast("Loaded newer changes — re-check your edit");pushing=false;return;}}
+  const now=new Date().toISOString();
+  await fetch(state.cfg.url+"/rest/v1/tracker?on_conflict=id",{method:"POST",headers:{...hdr(),"Prefer":"resolution=merge-duplicates"},body:JSON.stringify([{id:"augusto",payload:{plan:state.plan,done:state.done,ccs:state.ccs,nbme:state.nbme,sessions:state.sessions},updated_by:state.cfg.name||"",updated_at:now}])});
+  lastSync=now;
+ }catch(e){}
+ pushing=false;
+}
+async function pull(){if(!(state.cfg.url&&state.cfg.key))return;try{const r=await fetch(state.cfg.url+"/rest/v1/tracker?id=eq.augusto&select=payload,updated_at",{headers:hdr()});const rows=await r.json();if(Array.isArray(rows)&&rows[0]&&rows[0].payload){const p=rows[0].payload;if(p.plan)state.plan=p.plan;state.done=p.done||{};state.ccs=p.ccs||[];state.nbme=p.nbme||[];state.sessions=p.sessions||{};lastSync=rows[0].updated_at||lastSync;localStorage.setItem(LS,JSON.stringify(state));renderAll();}}catch(e){}}
+let tt;function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("show"),1600);}
+$("#sub").textContent=state.plan.start+" → "+state.plan.end+", "+state.plan.year+" · UWorld "+state.plan.uworld_total+" (split 50/50, ~"+state.plan.per_unit+"/full day) · CCS 181 · NBME 7/8 · UWSA 1/2 · Free 137";
+renderAll();syncStatus();if(state.cfg.url&&state.cfg.key){(async()=>{await pull();setInterval(pull,30000);})();}
+</script></body></html>
